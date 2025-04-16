@@ -22,17 +22,17 @@ public class Reservation {
             nullable =  false )
     private Date end_time;
 
-    @Column(name ="tottale-price",
+    @Column(name ="total-price",
             nullable = false)
-    private long tottale_price;
+    private long total_price;
 
     @Column(name = "created-at",
             nullable =  false )
     private Date created_at;
 
     @OneToOne
-    private room room;
+    private Room room;
 
     @OneToMany
-    private option option;
+    private Option option;
 }

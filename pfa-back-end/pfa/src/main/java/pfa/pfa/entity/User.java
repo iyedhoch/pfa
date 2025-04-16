@@ -31,7 +31,7 @@ public class User {
     private Date created_at;
 
     @OneToMany
-    private reservation reservation;
+    private Reservation reservation;
 
 
 }
