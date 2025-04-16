@@ -1,15 +1,16 @@
-import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+
+import { useEffect, useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
 
 export function LoadingSpinner({ show = true }) {
-  const [mounted, setMounted] = useState(false);
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    setMounted(true);
-    return () => setMounted(false);
-  }, []);
+    setMounted(true)
+    return () => setMounted(false)
+  }, [])
 
-  if (!mounted) return null;
+  if (!mounted) return null
 
   return (
     <AnimatePresence>
@@ -60,5 +61,16 @@ export function LoadingSpinner({ show = true }) {
         </motion.div>
       )}
     </AnimatePresence>
-  );
+  )
 }
+
+
+
+
+/*import { LoadingSpinner } from "@/components/loading-spinner"
+
+// In your component
+const [isLoading, setIsLoading] = useState(false)
+
+// Show loading when needed
+<LoadingSpinner show={isLoading} />*/
