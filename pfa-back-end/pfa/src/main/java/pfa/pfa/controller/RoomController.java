@@ -6,7 +6,7 @@ import pfa.pfa.entity.Room;
 import pfa.pfa.service.Room.RoomService;
 
 import java.util.List;
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/Room")
 @RestController
 @RequiredArgsConstructor
@@ -19,13 +19,13 @@ public class RoomController {
     }
 
     @PostMapping
-    public Room addroom(Room room){
+    public Room addroom(@RequestBody Room room){
         return roomService.addroom(room);
 
     }
 
     @PutMapping("{id}")
-    public void updateroom(@PathVariable long id ,  Room r){
+    public void updateroom(@PathVariable long id ,@RequestBody  Room r){
         roomService.updateroom(id,r);
     }
 

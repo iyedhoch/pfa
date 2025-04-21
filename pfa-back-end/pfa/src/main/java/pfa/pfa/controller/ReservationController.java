@@ -8,7 +8,7 @@ import pfa.pfa.service.Reservation.ReservarsationService;
 
 
 import java.util.List;
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/Reservation")
 @RestController
 @RequiredArgsConstructor
@@ -21,13 +21,13 @@ public class ReservationController {
     }
 
     @PostMapping
-    public Reservation addreservation(Reservation reservation){
+    public Reservation addreservation(@RequestBody Reservation reservation){
         return reservationservice.addreservation(reservation);
 
     }
 
     @PutMapping("{id}")
-    public void updatereservation(@PathVariable long id , Reservation reservation){
+    public void updatereservation(@PathVariable long id ,@RequestBody Reservation reservation){
         reservationservice.updatereservation(id,reservation);
     }
 

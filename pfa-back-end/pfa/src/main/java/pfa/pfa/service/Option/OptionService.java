@@ -13,6 +13,6 @@ public interface OptionService {
 
     void deleteoption(long id);
 
-    void updateOption(long id ,Option option);
+    void updateoption(long id ,Option option);
 
 }

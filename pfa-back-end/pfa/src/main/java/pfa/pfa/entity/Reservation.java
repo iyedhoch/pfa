@@ -1,12 +1,18 @@
 package pfa.pfa.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
+@Entity
+@Data
 public class Reservation {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
 
@@ -34,5 +40,6 @@ public class Reservation {
     private Room room;
 
     @OneToMany
-    private Option option;
+    @JoinColumn(name = "reservation_id")
+    private List<Option> options;
 }

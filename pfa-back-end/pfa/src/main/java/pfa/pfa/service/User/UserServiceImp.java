@@ -1,12 +1,45 @@
 package pfa.pfa.service.User;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RestController;
+import pfa.pfa.entity.User;
+import repositories.UserRepository;
+
+import java.util.List;
 
 @Service
-@RestController
+@RequiredArgsConstructor
 public abstract class UserServiceImp implements UserService {
+    private final UserRepository userRepository;
 
+    @Override
+    public List<User> getalluser() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public User adduser(User user) {
+        return userRepository.save(user);
+    }
+
+    @Override
+    public void deleteuser(long id) {
+        userRepository.deleteById(id);
+    }
+
+    @Override
+    public void updateuser(long id, User user) {
+        User existingUser = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        existingUser.setName(user.getName());
+        existingUser.setEmail(user.getEmail());
+        existingUser.setPassword(user.getPassword());
+        existingUser.setCreated_at(user.getCreated_at());
+
+        userRepository.save(existingUser); // Save the updated user
+    }
 
 
 }

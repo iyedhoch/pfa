@@ -6,7 +6,7 @@ import pfa.pfa.entity.User;
 import pfa.pfa.service.User.UserService;
 
 import java.util.List;
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/User")
 @RestController
 @RequiredArgsConstructor
@@ -18,13 +18,13 @@ public class UserController {
     }
 
     @PostMapping
-    public User adduser(User user){
+    public User adduser(@RequestBody User user){
         return userService.adduser(user);
 
     }
 
     @PutMapping("{id}")
-    public void updateuser(@PathVariable long id , User user){
+    public void updateuser(@PathVariable long id ,@RequestBody User user){
         userService.updateuser(id,user);
     }
 

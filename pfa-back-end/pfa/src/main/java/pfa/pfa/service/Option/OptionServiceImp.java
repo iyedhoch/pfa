@@ -1,31 +1,39 @@
 package pfa.pfa.service.Option;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RestController;
 import pfa.pfa.entity.Option;
+import repositories.OptionRepository;
+
 
 import java.util.List;
 
 @Service
-@RestController
-public abstract class OptionServiceImp implements OptionService{
+@RequiredArgsConstructor
+public class OptionServiceImp implements OptionService {
+
+    private final OptionRepository optionRepository;
+
     @Override
     public List<Option> getalloption() {
-        return List.of();
+        return optionRepository.findAll();
     }
 
     @Override
     public Option addoption(Option option) {
-        return null;
+        return optionRepository.save(option);
     }
 
     @Override
     public void deleteoption(long id) {
-
+        optionRepository.deleteById(id);
     }
 
     @Override
-    public void updateoption(long id,Option option){
-
+    public void updateoption(long id, Option option) {
+        Option existing = optionRepository.findById(id).orElseThrow();
+        existing.setName(option.getName());
+        existing.setPrice(option.getPrice());
+        optionRepository.save(existing);
     }
 }
