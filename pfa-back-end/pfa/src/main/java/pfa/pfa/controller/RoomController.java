@@ -2,6 +2,7 @@ package pfa.pfa.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import pfa.pfa.entity.Option;
 import pfa.pfa.entity.Room;
 import pfa.pfa.service.Room.RoomService;
 
@@ -16,6 +17,11 @@ public class RoomController {
     @GetMapping
     public List<Room> getallrroms() {
         return roomService.getallroom();
+    }
+
+    @GetMapping("{id}")
+    public Room getroom(@PathVariable long id){
+        return roomService.getroom(id);
     }
 
     @PostMapping

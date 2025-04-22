@@ -2,6 +2,7 @@ package pfa.pfa.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import pfa.pfa.entity.Option;
 import pfa.pfa.entity.Reservation;
 import pfa.pfa.entity.User;
 import pfa.pfa.service.Reservation.ReservarsationService;
@@ -18,6 +19,11 @@ public class ReservationController {
     @GetMapping
     public List<Reservation> getallreservation() {
         return reservationservice.getallreservation();
+    }
+
+    @GetMapping("{id}")
+    public Reservation getreservation(@PathVariable long id){
+        return reservationservice.getreservation(id);
     }
 
     @PostMapping

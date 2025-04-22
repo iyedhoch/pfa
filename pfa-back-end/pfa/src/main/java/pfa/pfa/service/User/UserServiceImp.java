@@ -3,6 +3,7 @@ package pfa.pfa.service.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RestController;
+import pfa.pfa.entity.Room;
 import pfa.pfa.entity.User;
 import repositories.UserRepository;
 
@@ -16,6 +17,11 @@ public abstract class UserServiceImp implements UserService {
     @Override
     public List<User> getalluser() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public User getuser(long id){
+        return userRepository.findById(id).orElseThrow();
     }
 
     @Override
@@ -41,5 +47,13 @@ public abstract class UserServiceImp implements UserService {
         userRepository.save(existingUser); // Save the updated user
     }
 
+    @Override
+    public User login(String email, String password) {
+        User user = userRepository.findByEmail(email);
+        if (user != null && user.getPassword().equals(password)) {
+            return user;
+        }
+        return null;
+    }
 
 }

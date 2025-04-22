@@ -15,4 +15,7 @@ public class Room {
 
     @Column(name = "price")
     private long price;
+
+    @Column(name = "name")
+    private String name;
 }

@@ -3,6 +3,7 @@ package pfa.pfa.service.Room;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RestController;
+import pfa.pfa.entity.Reservation;
 import pfa.pfa.entity.Room;
 import repositories.RoomRepository;
 
@@ -16,6 +17,11 @@ public abstract class RoomServiceImp implements RoomService{
     @Override
     public List<Room> getallroom() {
         return roomRepository.findAll();
+    }
+
+    @Override
+    public Room getroom(long id){
+        return roomRepository.findById(id).orElseThrow();
     }
 
     @Override

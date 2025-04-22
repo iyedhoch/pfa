@@ -29,6 +29,9 @@ public class User {
             nullable =  false )
     private Date created_at;
 
+    @Column(name= "isAdmin")
+    private Boolean isadmin=false;
+
     @OneToMany
     private Reservation reservation;
 

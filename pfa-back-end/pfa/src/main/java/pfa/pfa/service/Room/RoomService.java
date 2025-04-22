@@ -1,12 +1,15 @@
 package pfa.pfa.service.Room;
 
 import org.springframework.stereotype.Service;
+import pfa.pfa.entity.Option;
 import pfa.pfa.entity.Room;
 
 import java.util.List;
 
 @Service
 public interface RoomService {
+    Room getroom(long id);
+
     List<Room> getallroom();
 
     Room addroom(Room room);

@@ -3,6 +3,7 @@ package pfa.pfa.service.Reservation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RestController;
+import pfa.pfa.entity.Option;
 import pfa.pfa.entity.Reservation;
 import repositories.ReservationRepository;
 
@@ -16,6 +17,11 @@ public abstract class ReservationServiceImp implements ReservarsationService{
     @Override
     public Reservation addreservation(Reservation reservation) {
         return reservationRepository.save(reservation);
+    }
+
+    @Override
+    public Reservation getreservation(long id){
+        return reservationRepository.findById(id).orElseThrow();
     }
 
     @Override

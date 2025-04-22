@@ -24,6 +24,11 @@ public class OptionController {
         return optionService.getalloption();
     }
 
+    @GetMapping("{id}")
+    public Option getoption(@PathVariable long id){
+        return optionService.getoption(id);
+    }
+
     @PostMapping
     public Option addoption(@RequestBody Option option){
         return optionService.addoption(option);

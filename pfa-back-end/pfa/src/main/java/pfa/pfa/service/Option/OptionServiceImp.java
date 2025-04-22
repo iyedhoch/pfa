@@ -7,6 +7,7 @@ import repositories.OptionRepository;
 
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -17,6 +18,11 @@ public class OptionServiceImp implements OptionService {
     @Override
     public List<Option> getalloption() {
         return optionRepository.findAll();
+    }
+
+    @Override
+    public Option getoption(long id){
+        return optionRepository.findById(id).orElseThrow();
     }
 
     @Override
