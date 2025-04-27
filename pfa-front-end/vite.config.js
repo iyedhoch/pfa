@@ -7,4 +7,10 @@ export default defineConfig({
   plugins: [react(),
     tailwindcss(),
   ],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"]
+    }
+  }
 })
