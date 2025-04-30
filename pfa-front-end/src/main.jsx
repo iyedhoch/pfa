@@ -2,8 +2,12 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import { createBrowserRouter,RouterProvider } from 'react-router-dom'
-import WelcomePage from './Pages/welcomePage'
+import WelcomePage from './Pages/WelcomePage'
 import NotFound from './Pages/NotFound'
+import Reserve from './Pages/Reserve'
+import Login from './Pages/Login'
+import Register from './Pages/register'
+import DashboardPage from './Pages/Dashboard'
 
 
 const router= createBrowserRouter([
@@ -15,7 +19,23 @@ const router= createBrowserRouter([
   {
     path:"*",
     element:<NotFound/>
-  }
+  },
+  {
+    path:"/reserve",
+    element:<Reserve/>
+  },
+  {
+    path:"/login",
+    element:<Login/>
+  },
+  {
+    path:"/register",
+    element:<Register/>
+  },
+  {
+    path:"/Dashboard",
+    element:<DashboardPage/>
+  },
 
 ])
 
