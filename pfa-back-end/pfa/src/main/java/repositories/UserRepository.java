@@ -7,4 +7,6 @@ import pfa.pfa.entity.User;
 @Repository
 public interface UserRepository extends JpaRepository<User , Long> {
     User findByEmail(String email);
+    User findByUsername(String name);
+    User findByFirstnameAndLastname(String firstname, String lastname);
 }
