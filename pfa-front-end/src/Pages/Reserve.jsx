@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { format } from "date-fns"
 import { CalendarIcon, Check, ChevronLeft, ChevronRight, Loader2, Users ,Monitor,Coffee} from "lucide-react"
 import {
@@ -22,6 +22,7 @@ import Footer from "../layout/Footer"
 import Navbar from "../layout/Navbar"
 import Button from "../components/PrimaryButton"
 import { LoadingSpinner } from "../components/Loading"
+import Datepicker from "react-tailwindcss-datepicker"; 
 import { Link } from "react-router-dom"
 const rooms = [
   {
@@ -74,7 +75,20 @@ export default function ReservePage() {
   const [isLoading, setIsLoading] = useState(false)
   const [step, setStep] = useState(1)
   const [calendarOpen, setCalendarOpen] = useState(false)
+  const today = new Date();
+  const [dateValue, setDateValue] = useState({
+    startDate: today,
+    endDate: today,
+  });
 
+  useEffect(() => {
+    // Always reset to today's date on first render
+    setDateValue({ startDate: today, endDate: today });
+  }, []);
+
+  const handleDateChange = (newValue) => {
+    setDateValue(newValue);
+  };
   const calculatePrice = () => {
     if (!selectedRoom || !startTime || !endTime) return 0
     const room = rooms.find((r) => r.id === selectedRoom)
@@ -155,37 +169,30 @@ export default function ReservePage() {
                 </CardHeader>
 
                 <CardBody className="space-y-6 p-6">
-                  <div className="space-y-2">
-                    <Typography variant="small" className="font-medium">
-                      Date
-                    </Typography>
-                    <Popover open={calendarOpen} handler={setCalendarOpen} placement="bottom">
-                      <PopoverHandler>
-                        <Button
-                          variant="outlined"
-                          className="w-full flex items-center justify-start gap-2 normal-case"
-                          color="gray"
-                        >
-                          <CalendarIcon className="h-4 w-4 text-pink-500" />
-                          {date ? format(date, "PPP") : <span>Pick a date</span>}
-                        </Button>
-                      </PopoverHandler>
-                      <PopoverContent className="w-auto p-0">
-                        <div className="p-2">
-                          <input
-                            type="date"
-                            value={format(date, "yyyy-MM-dd")}
-                            onChange={(e) => {
-                              setDate(new Date(e.target.value))
-                              setCalendarOpen(false)
-                            }}
-                            min={format(new Date(), "yyyy-MM-dd")}
-                            className="w-full p-2 border rounded-md focus:ring-2 focus:ring-pink-400"
-                          />
-                        </div>
-                      </PopoverContent>
-                    </Popover>
-                  </div>
+                <div className="space-y-2">
+      <Typography variant="small" className="font-medium">
+        Date
+      </Typography>
+      <div className="relative w-full">
+        {/* Icon */}
+        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <CalendarIcon className="h-5 w-5 text-pink-500" />
+        </div>
+
+        {/* Datepicker */}
+        <Datepicker
+          value={dateValue}
+          onChange={handleDateChange}
+          asSingle={true}
+          useRange={false}
+          minDate={today}
+          popoverDirection="up"
+          displayFormat="PPP"
+          inputClassName="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-400 text-left"
+          toggleClassName="hidden"
+        />
+      </div>
+    </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
@@ -230,7 +237,7 @@ export default function ReservePage() {
                 </CardBody>
 
                 <CardFooter className="flex justify-between p-6 bg-gray-50">
-                  <Link to={"/"}>
+                  <Link to={"/dashboard"}>
                   <Button variant="outlined" color="gray">
                     Cancel
                   </Button>

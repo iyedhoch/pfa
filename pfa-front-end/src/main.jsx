@@ -8,6 +8,7 @@ import Reserve from './Pages/Reserve'
 import Login from './Pages/Login'
 import Register from './Pages/register'
 import DashboardPage from './Pages/Dashboard'
+import Admin from './Pages/Admin'
 
 
 const router= createBrowserRouter([
@@ -33,9 +34,14 @@ const router= createBrowserRouter([
     element:<Register/>
   },
   {
-    path:"/Dashboard",
+    path:"/dashboard",
     element:<DashboardPage/>
   },
+  {
+    path:"/admin",
+    element:<Admin/>
+  },
+
 
 ])
 
