@@ -2,16 +2,14 @@ package pfa.pfa.service.Reservation;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RestController;
-import pfa.pfa.entity.Option;
 import pfa.pfa.entity.Reservation;
-import repositories.ReservationRepository;
+import pfa.pfa.repositories.ReservationRepository;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public abstract class ReservationServiceImp implements ReservarsationService{
+public class ReservationServiceImp implements ReservationService{
     private final ReservationRepository reservationRepository;
 
     @Override

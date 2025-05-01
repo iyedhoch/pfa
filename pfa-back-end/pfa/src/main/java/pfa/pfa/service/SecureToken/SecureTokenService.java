@@ -1,6 +1,8 @@
 package pfa.pfa.service.SecureToken;
 
+import org.springframework.stereotype.Service;
 import pfa.pfa.entity.SecureToken;
+
 
 public interface SecureTokenService {
 

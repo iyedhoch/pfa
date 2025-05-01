@@ -2,16 +2,14 @@ package pfa.pfa.service.Room;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RestController;
-import pfa.pfa.entity.Reservation;
 import pfa.pfa.entity.Room;
-import repositories.RoomRepository;
+import pfa.pfa.repositories.RoomRepository;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public abstract class RoomServiceImp implements RoomService{
+public class RoomServiceImp implements RoomService{
     private final RoomRepository roomRepository;
 
     @Override

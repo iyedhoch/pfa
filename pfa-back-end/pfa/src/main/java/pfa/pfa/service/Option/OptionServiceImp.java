@@ -3,11 +3,10 @@ package pfa.pfa.service.Option;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pfa.pfa.entity.Option;
-import repositories.OptionRepository;
+import pfa.pfa.repositories.OptionRepository;
 
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

@@ -4,8 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import pfa.pfa.entity.Option;
 import pfa.pfa.entity.Reservation;
-import pfa.pfa.entity.User;
-import pfa.pfa.service.Reservation.ReservarsationService;
+
+
+import pfa.pfa.service.Reservation.ReservationService;
 
 
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 public class ReservationController {
-    final private ReservarsationService reservationservice;
+    final private ReservationService reservationservice;
 
     @GetMapping
     public List<Reservation> getallreservation() {

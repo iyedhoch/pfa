@@ -6,7 +6,7 @@ import pfa.pfa.entity.Option;
 import java.util.List;
 import java.util.Optional;
 
-@Service
+
 public interface OptionService {
     Option getoption(long id);
 

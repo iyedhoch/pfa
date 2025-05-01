@@ -43,4 +43,9 @@ public class Reservation {
     @OneToMany
     @JoinColumn(name = "reservation_id")
     private List<Option> options;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
 }

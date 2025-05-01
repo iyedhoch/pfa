@@ -8,6 +8,7 @@ import org.springframework.data.domain.Auditable;
 import javax.management.relation.Role;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -46,8 +47,8 @@ public class User{
     @OneToMany
     Set<SecureToken> token;
 
-    @OneToMany
-    private Reservation reservation;
+    @OneToMany(mappedBy = "user") // assuming Reservation has a 'user' field
+    private List<Reservation> reservation;
 
 
 }

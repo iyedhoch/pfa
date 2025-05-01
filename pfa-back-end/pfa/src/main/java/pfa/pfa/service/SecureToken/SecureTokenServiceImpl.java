@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import pfa.pfa.entity.SecureToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import repositories.SecureTokenRepository;
+import pfa.pfa.repositories.SecureTokenRepository;
 
 import org.springframework.security.crypto.keygen.BytesKeyGenerator;
 import org.springframework.security.crypto.keygen.KeyGenerators;

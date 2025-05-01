@@ -1,30 +1,20 @@
 package pfa.pfa.service.User;
 
-import Mailing.AccountVerificationEmailContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RestController;
-import pfa.pfa.entity.Room;
-import pfa.pfa.entity.SecureToken;
 import pfa.pfa.entity.User;
 import pfa.pfa.service.SecureToken.SecureTokenService;
-import repositories.UserRepository;
+import pfa.pfa.repositories.UserRepository;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public abstract class UserServiceImp implements UserService {
+public class UserServiceImp implements UserService {
     @Autowired
     private final UserRepository userRepository;
-
-    @Autowired
-    private BCryptPasswordEncoder encoder;
-
-    @Autowired
-    private SecureTokenService secureTokenService;
 
     @Override
     public List<User> getalluser() {
@@ -70,23 +60,7 @@ public abstract class UserServiceImp implements UserService {
         return null;
     }
 
-    public Boolean checkifUSerExist(String email){
-        return userRepository.findByEmail(email) != null;
-    }
 
-    public void register(User user){
-        user.setPassword(encoder.encode(user.getPassword()));
-        userRepository.save(user);
-    }
 
-    /*public void sendRegistrationConfirmationEmail(User user) {
-        SecureToken secureToken = secureTokenService.createToken();
-        secureToken.setUser(user);
-        secureTokenService.saveSecureToken(secureToken);
-
-        AccountVerificationEmailContext context = new AccountVerificationEmailContext();
-        context.setToken(secureToken.getToken());
-        context.buildVerifacationonUrl(baseUrl,secureToken.getToken());
-    }*/
 
 }

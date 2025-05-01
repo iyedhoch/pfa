@@ -6,7 +6,7 @@ import pfa.pfa.entity.Room;
 
 import java.util.List;
 
-@Service
+
 public interface RoomService {
     Room getroom(long id);
 
