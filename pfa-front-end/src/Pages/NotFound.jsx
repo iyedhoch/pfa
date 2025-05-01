@@ -1,6 +1,6 @@
 import { ArrowLeft, FolderX } from "lucide-react"
 
-import { Button } from "../components/PrimaryButton"
+import  Button  from "../components/PrimaryButton"
 import { Link } from "react-router-dom"
 
 export default function NotFound() {
@@ -20,12 +20,12 @@ export default function NotFound() {
           </p>
         </div>
         <div className="flex flex-col gap-2 min-[400px]:flex-row">
-          <button>
+          <Button>
             <Link href="/">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Go back home
             </Link>
-          </button>
+          </Button>
           <button>
             <Link href="/dashboard">View dashboard</Link>
           </button>
