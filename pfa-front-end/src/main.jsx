@@ -6,7 +6,7 @@ import WelcomePage from './Pages/WelcomePage'
 import NotFound from './Pages/NotFound'
 import Reserve from './Pages/Reserve'
 import Login from './Pages/Login'
-import Register from './Pages/register'
+import Register from './Pages/Register'
 import DashboardPage from './Pages/Dashboard'
 import Admin from './Pages/Admin'
 

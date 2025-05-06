@@ -20,33 +20,34 @@ export default function Register(){
         password: "",
     });
     const handleChange = (e) => {
-        setFormData((prev) => ({ ...prev, [e.target.id]: e.target.value }));
-      };
+      const { id, value } = e.target;
+      setFormData(prev => ({
+          ...prev,
+          [id]: value
+      }));
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
 
-      const handleSubmit = async (e) => {
-        e.preventDefault();
-        setTimeout(()=>{
-            setIsLoading(false)
-        },1500);
-        console.log("k")
-        try {
-          const response = await axios.post("http://localhost:8080/api/users/register", {
-            name: `${formData.firstName} ${formData.lastName}`,
-          email: formData.email,
-          password: formData.password,
-          acountverified: false,
-          logindisabled: false,
-          isadmin: false,
-          });
-          console.log("User registered:", response.data);
-          navigate("/login");
-        } catch (error) {
-          console.error("Registration failed:", error.response?.data || error.message);
-          alert("Failed to register. Please try again.");
-        } finally {
-          setIsLoading(false);
-        }
-      };
+    const userData = {
+      name: `${formData.firstName} ${formData.lastName}`,
+      email: formData.email,
+      password: formData.password,
+    };
+
+    try {
+      await axios.post("http://localhost:8080/api/users/register", userData);
+      navigate("/dashboard"); 
+    } catch (error) {
+      console.error("Registration failed:", error.response?.data || error.message);
+      alert("Failed to register. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
+    
     return(
         
         <div className="container flex h-screen w-screen flex-col items-center justify-center">

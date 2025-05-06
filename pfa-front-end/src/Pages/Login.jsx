@@ -22,18 +22,23 @@ export default function Login(){
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-
+  
     try {
-      const res = await axios.post("http://localhost:8080/api/users/login", loginData);
-      const { role, token, userId } = res.data;
-
-      // Store the token and userId
-      localStorage.setItem("authToken", token);
+      console.log("Ka")
+      const res = await axios.post("http://localhost:8080/api/users/login", {
+        email: loginData.email,
+        password: loginData.password,
+      }, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      console.log("Ké")
+      const { role, userId } = res.data;
+  
       localStorage.setItem("userId", userId);
-
       toast.success("Login successful!", { autoClose: 1500 });
-
-      // Redirect based on role
+  
       setTimeout(() => {
         if (role === "admin") {
           navigate("/admin");
@@ -41,7 +46,7 @@ export default function Login(){
           navigate("/dashboard");
         }
       }, 1800);
-
+  
     } catch (error) {
       const errorMsg = error.response?.data?.error || "Login failed. Please try again.";
       toast.error(errorMsg, { autoClose: 3000 });
@@ -49,6 +54,8 @@ export default function Login(){
       setIsLoading(false);
     }
   };
+  
+  
 
   return (
     <>

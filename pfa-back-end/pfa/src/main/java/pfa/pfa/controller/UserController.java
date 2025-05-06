@@ -1,10 +1,12 @@
 package pfa.pfa.controller;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder; 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,8 +23,8 @@ import lombok.RequiredArgsConstructor;
 import pfa.pfa.entity.User;
 import pfa.pfa.service.User.UserService;
 
-@CrossOrigin(origins = "http://localhost:3000")
-@RequestMapping("/User")
+@CrossOrigin(origins = "http://localhost:5173")
+@RequestMapping("/api/users")  
 @RestController
 @RequiredArgsConstructor
 public class UserController {
@@ -37,10 +39,28 @@ public class UserController {
         return userService.getuser(id);
     }
 
-    @PostMapping
-    public User adduser(@RequestBody User user){
-        return userService.adduser(user);
-
+    @PostMapping("/register")
+    public ResponseEntity<?> register(@RequestBody Map<String, String> request) {
+        try {
+            String name = request.get("name");
+            String email = request.get("email");
+            String password = request.get("password");
+    
+            User user = new User();
+            user.setName(name);
+            user.setEmail(email);
+            user.setPassword(new BCryptPasswordEncoder().encode(password));
+            user.setCreated_at(new Date());
+            user.setAcountverified(false);
+            user.setLogindisabled(false);
+            user.setIsadmin(false);
+    
+            User createdUser = userService.adduser(user);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Registration failed: " + e.getMessage());
+        }
     }
 
     @PutMapping("{id}")
@@ -52,7 +72,6 @@ public class UserController {
     public void deleteuser(@PathVariable long id){
         userService.deleteuser(id);
     }
-
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Map<String, String> request) {
         String email = request.get("email");
@@ -74,4 +93,5 @@ public class UserController {
         }
     }
 
+    
 }

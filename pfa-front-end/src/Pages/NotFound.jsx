@@ -21,13 +21,13 @@ export default function NotFound() {
         </div>
         <div className="flex flex-col gap-2 min-[400px]:flex-row">
           <Button>
-            <Link href="/">
+            <Link to="/">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Go back home
             </Link>
           </Button>
           <button>
-            <Link href="/dashboard">View dashboard</Link>
+            <Link to="/dashboard">View dashboard</Link>
           </button>
         </div>
       </div>

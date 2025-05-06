@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { format } from "date-fns"
+import { formatISO } from "date-fns";
 import { CalendarIcon, Check, ChevronLeft, ChevronRight, Loader2, Users ,Monitor,Coffee} from "lucide-react"
 import {
   Card,
@@ -157,102 +158,113 @@ export default function ReservePage() {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
-            {step === 1 && (
-              <Card className="overflow-hidden shadow-lg">
-                <CardHeader color="pink" variant="gradient" className="p-6">
-                  <Typography variant="h4" color="gray">
-                    Select Date & Time
-                  </Typography>
-                  <Typography color="gray" variant="small" opacity={0.8}>
-                    Choose when you'd like to reserve your space
-                  </Typography>
-                </CardHeader>
-
-                <CardBody className="space-y-6 p-6">
-                <div className="space-y-2">
-      <Typography variant="small" className="font-medium">
-        Date
+          {step === 1 && (
+  <Card className="overflow-hidden shadow-lg">
+    <CardHeader color="pink" variant="gradient" className="p-6">
+      <Typography variant="h4" color="gray">
+        Select Date & Time
       </Typography>
-      <div className="relative w-full">
-        {/* Icon */}
-        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-          <CalendarIcon className="h-5 w-5 text-pink-500" />
+      <Typography color="gray" variant="small" opacity={0.8}>
+        Choose when you'd like to reserve your space
+      </Typography>
+    </CardHeader>
+
+    <CardBody className="space-y-6 p-6">
+      <div className="space-y-2">
+        <Typography variant="small" className="font-medium">
+          Date
+        </Typography>
+        <div className="relative w-full">
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <CalendarIcon className="h-5 w-5 text-pink-500" />
+          </div>
+          <input
+            type="date"
+            value={dateValue.startDate ? formatISO(dateValue.startDate, { representation: 'date' }) : ''}
+            onChange={(e) => {
+              const selectedDate = e.target.value ? new Date(e.target.value) : today;
+              setDateValue({
+                startDate: selectedDate,
+                endDate: selectedDate
+              });
+            }}
+            min={formatISO(today, { representation: 'date' })}
+            className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-400 text-left"
+          />
         </div>
-
-        {/* Datepicker */}
-        <Datepicker
-          value={dateValue}
-          onChange={handleDateChange}
-          asSingle={true}
-          useRange={false}
-          minDate={today}
-          popoverDirection="up"
-          displayFormat="PPP"
-          inputClassName="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-400 text-left"
-          toggleClassName="hidden"
-        />
       </div>
-    </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Typography variant="small" className="font-medium">
-                        Start Time
-                      </Typography>
-                      <Select 
-                      value={startTime} 
-                      onChange={setStartTime} 
-                      color="pink" 
-                      className="w-full p-2 border rounded-lg bg-white">
-                        {timeSlots.slice(0, -1).map((time) => (
-                          <Option key={time} value={time}>
-                            {time}
-                          </Option>
-                        ))}
-                      </Select>
-                    </div>
-                    <div className="space-y-2">
-                      <Typography variant="small" className="font-medium">
-                        End Time
-                      </Typography>
-                      <Select
-                        value={endTime}
-                        onChange={setEndTime}
-                        
-                        disabled={!startTime}
-                        color="pink"
-                        className="w-full p-2 border rounded-lg bg-white"
-                      >
-                        {startTime &&
-                          timeSlots
-                            .filter((time) => time > startTime)
-                            .map((time) => (
-                              <Option key={time} value={time}>
-                                {time}
-                              </Option>
-                            ))}
-                      </Select>
-                    </div>
-                  </div>
-                </CardBody>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <Typography variant="small" className="font-medium">
+            Start Time
+          </Typography>
+          <div className="relative">
+            <Select 
+              value={startTime} 
+              onChange={setStartTime} 
+              color="pink"
+              className="[&>div]:min-h-[40px] [&>div]:py-2"
+              menuProps={{
+                className: "z-50 min-w-[200px] mt-1",
+                placement: "bottom-start"
+              }}
+            >
+              {timeSlots.slice(0, -1).map((time) => (
+                <Option key={time} value={time} className="py-2">
+                  {time}
+                </Option>
+              ))}
+            </Select>
+          </div>
+        </div>
+        <div className="space-y-2">
+          <Typography variant="small" className="font-medium">
+            End Time
+          </Typography>
+          <div className="relative">
+            <Select
+              value={endTime}
+              onChange={setEndTime}
+              disabled={!startTime}
+              color="pink"
+              className="[&>div]:min-h-[40px] [&>div]:py-2"
+              menuProps={{
+                className: "z-50 min-w-[200px] mt-1",
+                placement: "bottom-start"
+              }}
+            >
+              {startTime &&
+                timeSlots
+                  .filter((time) => time > startTime)
+                  .map((time) => (
+                    <Option key={time} value={time} className="py-2">
+                      {time}
+                    </Option>
+                  ))}
+            </Select>
+          </div>
+        </div>
+      </div>
+    </CardBody>
 
-                <CardFooter className="flex justify-between p-6 bg-gray-50">
-                  <Link to={"/dashboard"}>
-                  <Button variant="outlined" color="gray">
-                    Cancel
-                  </Button>
-                  </Link>
-                  <Button
-                    onClick={() => setStep(2)}
-                    disabled={!date || !startTime || !endTime}
-                    color="pink"
-                    className="flex items-center gap-2"
-                  >
-                    Next <ChevronRight className="h-4 w-4" />
-                  </Button>
-                </CardFooter>
-              </Card>
-            )}
+    <CardFooter className="flex justify-between p-6 bg-gray-50">
+      <Link to={"/dashboard"}>
+        <Button variant="outlined" color="gray">
+          Cancel
+        </Button>
+      </Link>
+      <Button
+        onClick={() => setStep(2)}
+        disabled={!dateValue.startDate || !startTime || !endTime}
+        color="pink"
+        className="flex items-center gap-2"
+      >
+        Next <ChevronRight className="h-4 w-4" />
+      </Button>
+    </CardFooter>
+  </Card>
+)}
 
             {step === 2 && (
               <Card className="overflow-hidden shadow-lg">
@@ -337,121 +349,163 @@ export default function ReservePage() {
               </Card>
             )}
 {step === 3 && (
-      <Card className="w-full max-w-2xl mx-auto">
-        <CardHeader color="pink" variant="gradient" className="p-6">
-          <Typography variant="h4" color="gray">
-            Confirm Reservation
-          </Typography>
-          <Typography color="gray" variant="small" opacity={0.8}>
-            Review your reservation details and add optional amenities
-          </Typography>
-        </CardHeader>
+  <Card className="w-full max-w-2xl mx-auto">
+    <CardHeader
+      color="pink"
+      variant="gradient"
+      className="p-6 flex flex-col gap-1"
+    >
+      <Typography variant="h4" color="white">
+        Confirm Reservation
+      </Typography>
+      <Typography variant="small" className="text-white opacity-80">
+        Review your reservation details and add optional amenities
+      </Typography>
+    </CardHeader>
 
-        <CardBody className="space-y-6">
-          <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <div className="text-sm font-medium text-gray-500">Date</div>
-                <div>{date ? format(date, 'PPP') : 'Not selected'}</div>
-              </div>
-              <div>
-                <div className="text-sm font-medium text-gray-500">Time</div>
-                <div>
-                  {startTime} - {endTime}
-                </div>
-              </div>
-              <div>
-                <div className="text-sm font-medium text-gray-500">Room</div>
-                <div>{rooms.find((r) => r.id === selectedRoom)?.name}</div>
-              </div>
-              <div>
-                <div className="text-sm font-medium text-gray-500">Capacity</div>
-                <div>Up to {rooms.find((r) => r.id === selectedRoom)?.capacity} people</div>
-              </div>
-            </div>
-          </div>
-
-          <Separator />
-
+    <CardBody className="space-y-6">
+      {/* Reservation Summary */}
+      <div className="grid gap-4 py-4">
+        <div className="grid grid-cols-2 gap-4">
           <div>
-            <Typography variant="h6" color="gray-700">
-              Optional Amenities
+            <Typography variant="small" color="gray" className="font-medium">
+              Date
             </Typography>
-            <div className="space-y-3">
-              {optionalAmenities.map((amenity) => (
-                <div key={amenity.id} className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2">
-                    <Checkbox
-                      id={amenity.id}
-                      checked={selectedAmenities.includes(amenity.id)}
-                      onCheckedChange={(checked) => {
-                        if (checked) {
-                          setSelectedAmenities([...selectedAmenities, amenity.id]);
-                        } else {
-                          setSelectedAmenities(selectedAmenities.filter((id) => id !== amenity.id));
-                        }
-                      }}
-                    />
-                    <Label htmlFor={amenity.id} className="flex items-center">
-                      {amenity.id === 'whiteboard' && <Monitor className="mr-2 h-4 w-4 text-gray-500" />}
-                      {amenity.id === 'datashow' && <Monitor className="mr-2 h-4 w-4 text-gray-500" />}
-                      {amenity.id === 'coffee' && <Coffee className="mr-2 h-4 w-4 text-gray-500" />}
-                      {amenity.label}
-                    </Label>
-                  </div>
-                  <div className="text-sm font-medium text-gray-500">+${amenity.price}</div>
-                </div>
-              ))}
-            </div>
+            <Typography>{date ? format(date, 'PPP') : 'Not selected'}</Typography>
           </div>
+          <div>
+            <Typography variant="small" color="gray" className="font-medium">
+              Time
+            </Typography>
+            <Typography>{startTime} - {endTime}</Typography>
+          </div>
+          <div>
+            <Typography variant="small" color="gray" className="font-medium">
+              Room
+            </Typography>
+            <Typography>{rooms.find((r) => r.id === selectedRoom)?.name}</Typography>
+          </div>
+          <div>
+            <Typography variant="small" color="gray" className="font-medium">
+              Capacity
+            </Typography>
+            <Typography>
+              Up to {rooms.find((r) => r.id === selectedRoom)?.capacity} people
+            </Typography>
+          </div>
+        </div>
+      </div>
 
-          <Separator />
+      {/* Divider */}
+      <div className="border-t border-gray-200" />
 
-          <div className="space-y-2">
-            <div className="flex justify-between">
-              <div className="text-sm">Room fee</div>
-              <div className="text-sm">
-                ${rooms.find((r) => r.id === selectedRoom)?.pricePerHour || 0} x
-                {startTime && endTime
-                  ? Number.parseInt(endTime.split(':')[0]) - Number.parseInt(startTime.split(':')[0])
-                  : 0}{' '}
-                hours
+      {/* Optional Amenities */}
+      <div>
+        <Typography variant="h6" color="blue-gray">
+          Optional Amenities
+        </Typography>
+        <div className="space-y-3">
+          {optionalAmenities.map((amenity) => (
+            <div
+              key={amenity.id}
+              className="flex items-center justify-between"
+            >
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id={amenity.id}
+                  checked={selectedAmenities.includes(amenity.id)}
+                  onChange={(e) => {
+                    const checked = e.target.checked;
+                    if (checked) {
+                      setSelectedAmenities([...selectedAmenities, amenity.id]);
+                    } else {
+                      setSelectedAmenities(
+                        selectedAmenities.filter((id) => id !== amenity.id)
+                      );
+                    }
+                  }}
+                  className="checked:bg-pink-500"
+                />
+                <label
+                  htmlFor={amenity.id}
+                  className="flex items-center text-sm text-gray-700"
+                >
+                  {amenity.id === 'whiteboard' && (
+                    <Monitor className="mr-2 h-4 w-4 text-gray-500" />
+                  )}
+                  {amenity.id === 'datashow' && (
+                    <Monitor className="mr-2 h-4 w-4 text-gray-500" />
+                  )}
+                  {amenity.id === 'coffee' && (
+                    <Coffee className="mr-2 h-4 w-4 text-gray-500" />
+                  )}
+                  {amenity.label}
+                </label>
               </div>
+              <Typography variant="small" color="gray">
+                +${amenity.price}
+              </Typography>
             </div>
-            {selectedAmenities.length > 0 &&
-              selectedAmenities.map((amenityId) => {
-                const amenity = optionalAmenities.find((a) => a.id === amenityId);
-                return (
-                  <div key={amenityId} className="flex justify-between">
-                    <div className="text-sm">{amenity?.label}</div>
-                    <div className="text-sm">${amenity?.price}</div>
-                  </div>
-                );
-              })}
-            <Separator />
-            <div className="flex justify-between font-medium">
-              <div>Total</div>
-              <div>${calculatePrice()}</div>
-            </div>
-          </div>
-        </CardBody>
+          ))}
+        </div>
+      </div>
 
-        <CardFooter className="flex justify-between">
-          <Button variant="outline" onClick={prevStep} color="gray">
-            <ChevronLeft className="mr-2 h-4 w-4" /> Back
-          </Button>
-          <Button type="submit" disabled={isLoading}>
-            {isLoading ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Processing
-              </>
-            ) : (
-              'Confirm Reservation'
-            )}
-          </Button>
-        </CardFooter>
-      </Card>
-    )}
+      {/* Divider */}
+      <div className="border-t border-gray-200" />
+
+      {/* Price Breakdown */}
+      <div className="space-y-2">
+        <div className="flex justify-between">
+          <Typography variant="small" color="gray">
+            Room fee
+          </Typography>
+          <Typography variant="small">
+            ${rooms.find((r) => r.id === selectedRoom)?.pricePerHour || 0} x{' '}
+            {startTime && endTime
+              ? Number.parseInt(endTime.split(':')[0]) -
+                Number.parseInt(startTime.split(':')[0])
+              : 0}{' '}
+            hours
+          </Typography>
+        </div>
+
+        {selectedAmenities.length > 0 &&
+          selectedAmenities.map((amenityId) => {
+            const amenity = optionalAmenities.find((a) => a.id === amenityId);
+            return (
+              <div key={amenityId} className="flex justify-between">
+                <Typography variant="small">{amenity?.label}</Typography>
+                <Typography variant="small">${amenity?.price}</Typography>
+              </div>
+            );
+          })}
+
+        <div className="border-t border-gray-200 my-2" />
+
+        <div className="flex justify-between font-medium">
+          <Typography>Total</Typography>
+          <Typography>${calculatePrice()}</Typography>
+        </div>
+      </div>
+    </CardBody>
+
+    <CardFooter className="flex justify-between">
+      <Button variant="outlined" onClick={prevStep} color="gray">
+        <ChevronLeft className="mr-2 h-4 w-4" /> Back
+      </Button>
+      <Button type="submit" color="pink" disabled={isLoading}>
+        {isLoading ? (
+          <>
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Processing
+          </>
+        ) : (
+          'Confirm Reservation'
+        )}
+      </Button>
+    </CardFooter>
+  </Card>
+)}
+
             {isLoading && (
               <div className="flex justify-center items-center mt-8">
                 <div className="flex flex-col items-center gap-2">
